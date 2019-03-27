@@ -2,14 +2,12 @@ package com.mystiko.smartmeterautomation;
 
 import android.app.ProgressDialog;
 import android.support.annotation.NonNull;
-import android.support.v4.widget.CircularProgressDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,66 +16,82 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-   private Button RegisterButton,LoginButton;
-    private EditText EmailET,PasswordEt;
-    private ProgressDialog progressDialog;
-    private FirebaseAuth firebaseAuth;
 
+    //defining view objects
+    private EditText editTextEmail;
+    private EditText editTextPassword;
+    private Button buttonSignup;
+    private ProgressDialog progressDialog;
+
+
+    //defining firebaseauth object
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        RegisterButton=(Button)findViewById(R.id.BRegister);
-        LoginButton=(Button)findViewById(R.id.BLogin);
-        EmailET=(EditText)findViewById(R.id.EditTextEmail);
-        PasswordEt=(EditText)findViewById(R.id.EditTextPassword);
-        RegisterButton.setOnClickListener(this);
-        LoginButton.setOnClickListener(this);
-        progressDialog=new ProgressDialog(this);
-        firebaseAuth=FirebaseAuth.getInstance();
+
+        //initializing firebase auth object
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        //initializing views
+        editTextEmail = (EditText) findViewById(R.id.editTextEmail);
+        editTextPassword = (EditText) findViewById(R.id.editTextPassword);
+
+        buttonSignup = (Button) findViewById(R.id.buttonSignup);
+
+        progressDialog = new ProgressDialog(this);
+
+        //attaching listener to button
+        buttonSignup.setOnClickListener(this);
     }
 
-    @Override
-    public void onClick(View v) {
-        if(v == RegisterButton){
-            registerUser();
-        }
-        
-    }
+    private void registerUser(){
 
-    private void registerUser() {
-        String Email=EmailET.getText().toString();
-        String Password=PasswordEt.getText().toString();
+        //getting email and password from edit texts
+        String email = editTextEmail.getText().toString().trim();
+        String password  = editTextPassword.getText().toString().trim();
 
-        if(TextUtils.isEmpty(Email)){
-            //email field empty
-            Toast.makeText(this,"Please Enter Email",Toast.LENGTH_SHORT).show();
+        //checking if email and passwords are empty
+        if(TextUtils.isEmpty(email)){
+            Toast.makeText(this,"Please enter email",Toast.LENGTH_LONG).show();
             return;
         }
 
-        if(TextUtils.isEmpty(Password)){
-            //Password field empty
-            Toast.makeText(this,"Please Enter Password",Toast.LENGTH_SHORT).show();
+        if(TextUtils.isEmpty(password)){
+            Toast.makeText(this,"Please enter password",Toast.LENGTH_LONG).show();
             return;
         }
 
-        progressDialog.setMessage("Registering User");
+        //if the email and password are not empty
+        //displaying a progress dialog
+
+        progressDialog.setMessage("Registering Please Wait...");
         progressDialog.show();
-        firebaseAuth.createUserWithEmailAndPassword(Email,Password)
+
+        //creating a new user
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        //checking if success
                         if(task.isSuccessful()){
-                            Toast.makeText(MainActivity.this,"Registered Successfully",Toast.LENGTH_LONG).show();
-                        }
-                        else {
-                            Toast.makeText(MainActivity.this,"Couldn't register! Please Try again...",Toast.LENGTH_SHORT).show();
+                            //display some message here
+                            Toast.makeText(MainActivity.this,"Successfully registered",Toast.LENGTH_LONG).show();
+                        }else{
+                            //display some message here
+                            Toast.makeText(MainActivity.this,"Registration Error",Toast.LENGTH_LONG).show();
                         }
                         progressDialog.dismiss();
                     }
                 });
 
+    }
 
+    @Override
+    public void onClick(View view) {
+        //calling register method on click
+        registerUser();
     }
 }
