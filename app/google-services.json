@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "549649853978",
+    "firebase_url": "https://smart-meter-automation.firebaseio.com",
+    "project_id": "smart-meter-automation",
+    "storage_bucket": "smart-meter-automation.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:549649853978:android:3f89a1f4e7353fac",
+        "android_client_info": {
+          "package_name": "com.mystiko.smartmeterautomation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "549649853978-p0pputflms71gf8j6oaq7tt7oqs5evis.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1AsOiPmSU7Ilrp7VXWsgMbS1Ua7m7vwg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
