@@ -12,6 +12,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+
+
         <EditText
             android:id="@+id/editTextEmail"
             android:layout_width="match_parent"
@@ -34,6 +36,13 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:text="Signup" />
+        <Button
+            android:layout_gravity="center"
+            android:id="@+id/buttonRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Already have an account?Login in here"
+            android:onClick="OpenLogin"/>
 
     </LinearLayout>
 

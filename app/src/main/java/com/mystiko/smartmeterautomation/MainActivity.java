@@ -1,6 +1,7 @@
 package com.mystiko.smartmeterautomation;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -93,5 +94,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         //calling register method on click
         registerUser();
+    }
+    public void OpenLogin(View view){
+        startActivity(new Intent(MainActivity.this,Login.class));
     }
 }
