@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,6 +23,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText editTextEmail;
     private EditText editTextPassword;
     private Button buttonSignup;
+
+    private TextView textViewSignin;
+
     private ProgressDialog progressDialog;
 
 
@@ -36,9 +40,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //initializing firebase auth object
         firebaseAuth = FirebaseAuth.getInstance();
 
+        //if getCurrentUser does not returns null
+        if(firebaseAuth.getCurrentUser() != null){
+            //that means user is already logged in
+            //so close this activity
+            finish();
+
+            //and open profile activity
+            startActivity(new Intent(getApplicationContext(), ProfileHome.class));
+        }
+
         //initializing views
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
+        textViewSignin = (TextView) findViewById(R.id.textViewSignin);
 
         buttonSignup = (Button) findViewById(R.id.buttonSignup);
 
@@ -46,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //attaching listener to button
         buttonSignup.setOnClickListener(this);
+        textViewSignin.setOnClickListener(this);
     }
 
     private void registerUser(){
@@ -78,8 +94,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         //checking if success
                         if(task.isSuccessful()){
-                            //display some message here
-                            Toast.makeText(MainActivity.this,"Successfully registered",Toast.LENGTH_LONG).show();
+                            finish();
+                            startActivity(new Intent(getApplicationContext(), ProfileHome.class));
                         }else{
                             //display some message here
                             Toast.makeText(MainActivity.this,"Registration Error",Toast.LENGTH_LONG).show();
@@ -92,10 +108,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        //calling register method on click
-        registerUser();
-    }
-    public void OpenLogin(View view){
-        startActivity(new Intent(MainActivity.this,Login.class));
+
+        if(view == buttonSignup){
+            registerUser();
+        }
+
+        if(view == textViewSignin){
+            //open login activity when user taps on the already registered textview
+            startActivity(new Intent(this, Login.class));
+        }
+
     }
 }
