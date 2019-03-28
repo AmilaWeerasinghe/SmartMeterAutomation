@@ -45,7 +45,7 @@ public class ProfileHome extends AppCompatActivity implements View.OnClickListen
         buttonLogout = (Button) findViewById(R.id.buttonLogout);
 
         //displaying logged in user name
-        textViewUserEmail.setText("Welcome "+user.getEmail());
+        textViewUserEmail.setText("Welcome you are logged in as "+user.getEmail());
 
         //adding listener to button
         buttonLogout.setOnClickListener(this);
